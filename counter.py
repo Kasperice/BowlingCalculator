@@ -4,15 +4,18 @@ def calculate_result(score):
     scores = translate_score(rounds)
 
     index = 0
-    for i in range(10):
-        if is_strike(index, scores):
-            counter += (10 + calculate_strike(scores, index))
-        elif is_spare(index, scores):
-            counter += (10 + calculate_spare(scores, index))
-        else:
-            counter += (scores[index] + scores[index+1])
-        index += 2
-    return counter
+    try:
+        for i in range(10):
+            if is_strike(index, scores):
+                counter += (10 + calculate_strike(scores, index))
+            elif is_spare(index, scores):
+                counter += (10 + calculate_spare(scores, index))
+            else:
+                counter += (scores[index] + scores[index+1])
+            index += 2
+        return counter
+    except IndexError:
+        return counter
 
 
 def is_strike(i, scores) -> int:

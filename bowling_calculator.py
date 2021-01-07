@@ -4,12 +4,30 @@ from display import display_leaderboard
 
 Player = collections.namedtuple('Player', "name scores current_result")
 
-players = []
-with open("lane1.txt") as file:
-    for line in file:
-        line = line.replace("\n", "")
-        (name, score) = line.split(":")
-        players.append(Player(name, score, calculate_result(score)))
 
-display_leaderboard(players)
+def prepare_lanes(number_of_lanes):
+    lanes = []
+    for i in range(number_of_lanes):
+        lanes.append("lane{}".format(i+1))
+    return lanes
+
+
+players = []
+number_of_lanes = 3
+
+lanes = prepare_lanes(number_of_lanes)
+for lane in lanes:
+    try:
+        with open("{}.txt".format(lane)) as file:
+            players.clear()
+            for line in file:
+                line = line.replace("\n", "")
+                (name, score) = line.split(":")
+                players.append(Player(name, score, calculate_result(score)))
+            print("*"*40)
+            display_leaderboard(lane, players)
+    except EnvironmentError:
+        print("{} is not used".format(lane))
+
+
 
