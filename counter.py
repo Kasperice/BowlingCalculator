@@ -1,32 +1,55 @@
 def calculate_result(score):
     counter = 0
-    last = False
     rounds = score.split("|")
-    print(rounds)
-    for i, round in enumerate(rounds):
-        if i == 9:
-            print("AAA")
-            last = True
-        if "X" in round:
-            counter += calculate_strike(rounds, i, last=last)
-        elif "/" in round:
-            counter += calculate_spare(rounds, i, last=last)
-        elif "-" in round:
-            counter += int(round.replace("-", ""))
-        elif len(round) == 1:
-            counter += int(round[0])
-        else:
-            counter += (int(round[0]) + int(round[1]))
+    scores = translate_score(rounds)
 
-    print(counter)
+    index = 0
+    for i in range(10):
+        if is_strike(index, scores):
+            counter += (10 + calculate_strike(scores, index))
+        elif is_spare(index, scores):
+            counter += (10 + calculate_spare(scores, index))
+        else:
+            counter += (scores[index] + scores[index+1])
+        index += 2
     return counter
 
 
-def calculate_strike(rounds, i, last):
-    if last:
-        return 10 + rounds[i+1]
-    return 0
+def is_strike(i, scores) -> int:
+    return scores[i] == 10
 
 
-def calculate_spare(rounds, i, last):
-    return 0
+def is_spare(i, scores):
+    return scores[i] + scores[i+1] == 10
+
+
+def calculate_strike(rounds, i):
+    if rounds[i+2] == 10:
+        return rounds[i+2] + rounds[i+4]
+    return rounds[i+2] + rounds[i+3]
+
+
+def calculate_spare(rounds, i):
+    return rounds[i+2]
+
+
+def translate_score(rounds):
+    scores = []
+    rounds = "".join(rounds)
+    for i, throw in enumerate(rounds):
+        if "X" in throw:
+            scores.append(10)
+            scores.append(0)
+        elif "/" in throw:
+            scores.append(10 - tmp)
+        elif "-" in throw:
+            scores.append(0)
+        else:
+            scores.append(int(throw))
+            tmp = int(throw)
+
+    return scores
+
+
+def is_full_match(rounds):
+    return len(rounds.split("|")) == 10
