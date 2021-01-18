@@ -2,7 +2,6 @@ def calculate_result(score):
     counter = 0
     rounds = score.split("|")
     scores = translate_score(rounds)
-
     index = 0
     try:
         for i in range(10):
@@ -38,6 +37,7 @@ def calculate_spare(rounds, i):
 
 def translate_score(rounds):
     scores = []
+    tmp = 0
     rounds = "".join(rounds)
     for i, throw in enumerate(rounds):
         if "X" in throw:

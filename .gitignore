@@ -79,3 +79,7 @@ venv/
 #Python
 .pytest_cache
 __pycache__
+
+#Coverage
+htmlcov
+.coverage
