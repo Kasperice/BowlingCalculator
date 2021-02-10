@@ -1,8 +1,8 @@
 import unittest
-from counter import translate_score, is_strike, is_spare, calculate_spare, calculate_strike, is_full_match
+from counter import translate_score, is_strike, is_spare, calculate_spare, calculate_strike, is_full_match, calculate_result
 
 
-class CounterTest(unittest.TestCase):
+class TestCounter(unittest.TestCase):
     def test_score_translation(self):
         results = ['12', '45', '5/', '8-', '9/', 'X', 'X', 'X', 'X', 'X']
         actual = translate_score(results)
@@ -56,6 +56,26 @@ class CounterTest(unittest.TestCase):
         rounds = "9-|9-|9-|9-|9-|9-|9-"
         actual = is_full_match(rounds)
         self.assertEqual(actual, False)
+
+    def test_calculate_result_for_two_rounds(self):
+        rounds = "11|11"
+        actual = calculate_result(rounds)
+        self.assertEqual(actual, 4)
+
+    def test_calculate_result_for_full_match_with_spares(self):
+        rounds = "9/|9/|9/|9/|9/|9/|9/"
+        actual = calculate_result(rounds)
+        self.assertEqual(actual, 114)
+
+    def test_calculate_result_for_full_match_with_strikes(self):
+        rounds = "X|X|X|X|X|X|X|X|X|X|XX"
+        actual = calculate_result(rounds)
+        self.assertEqual(actual, 300)
+
+    def test_calculate_result_for_full_match_with_strikes_and_spares(self):
+        rounds = "12|45|5/|8-|9/|X|X|X|X|X"
+        actual = calculate_result(rounds)
+        self.assertEqual(actual, 148)
 
 
 if __name__ == '__main__':
