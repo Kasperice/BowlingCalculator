@@ -4,18 +4,10 @@ from display import display_leaderboard
 
 Player = collections.namedtuple('Player', "name scores current_result")
 
-
-def prepare_lanes(number_of_lanes):
-    lanes = []
-    for i in range(number_of_lanes):
-        lanes.append(f"lane{i+1}")
-    return lanes
-
-
 players = []
 number_of_lanes = 3
 
-lanes = prepare_lanes(number_of_lanes)
+lanes = [f"lane{i+1}" for i in range(number_of_lanes)]
 for lane in lanes:
     try:
         with open(f"{lane}.txt") as file:
