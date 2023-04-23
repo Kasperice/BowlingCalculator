@@ -1,5 +1,6 @@
 from operator import attrgetter
-from counter import is_full_match
+
+from bowling_calculator.counter import is_full_match
 
 
 def display_leaderboard(lane, players) -> None:

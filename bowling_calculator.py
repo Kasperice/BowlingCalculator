@@ -1,8 +1,9 @@
 import collections
-from counter import calculate_result
-from display import display_leaderboard
 
-Player = collections.namedtuple('Player', "name scores current_result")
+from bowling_calculator.counter import calculate_result
+from bowling_calculator.display import display_leaderboard
+from bowling_calculator.player import Player
+
 
 players = []
 number_of_lanes = 3
