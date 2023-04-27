@@ -1,14 +1,30 @@
 import pytest
 
-from bowling_calculator.counter import translate_score, is_strike, is_spare, calculate_spare, calculate_strike, is_full_match, calculate_result
+from bowling_calculator.counter import (
+    translate_score,
+    is_strike,
+    is_spare,
+    calculate_spare,
+    calculate_strike,
+    is_full_match,
+    calculate_result,
+)
 
 
-@pytest.mark.parametrize("score, translated_score", [('12', [1, 2]),
-                                                     ('5/', [5, 5]),
-                                                     ('8-', [8, 0]),
-                                                     ('9/', [9, 1]),
-                                                     ('X', [10, 0]),
-                                                     (['12', '45', '5/', '8-', '9/', 'X', 'X', 'X', 'X', 'X'], [1, 2, 4, 5, 5, 5, 8, 0, 9, 1, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0]),])
+@pytest.mark.parametrize(
+    "score, translated_score",
+    [
+        ("12", [1, 2]),
+        ("5/", [5, 5]),
+        ("8-", [8, 0]),
+        ("9/", [9, 1]),
+        ("X", [10, 0]),
+        (
+            ["12", "45", "5/", "8-", "9/", "X", "X", "X", "X", "X"],
+            [1, 2, 4, 5, 5, 5, 8, 0, 9, 1, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0],
+        ),
+    ],
+)
 def test_score_translation(score, translated_score):
     actual = translate_score(score)
     assert actual == translated_score
@@ -47,19 +63,25 @@ def test_calculate_two_strikes():
     assert actual == expected
 
 
-@pytest.mark.parametrize("score, expected", [("9-|9-|9-|9-|9-|9-|9-|9-|9-|9-", True),
-                                             ("9-|9-|9-|9-|9-|9-|9-", False)])
+@pytest.mark.parametrize(
+    "score, expected",
+    [("9-|9-|9-|9-|9-|9-|9-|9-|9-|9-", True), ("9-|9-|9-|9-|9-|9-|9-", False)],
+)
 def test_is_full_match(score, expected):
     actual = is_full_match(score)
     assert actual == expected
 
 
-@pytest.mark.parametrize("score, result", [("11|11", 4),
-                                           ("9/|9/|9/|9/|9/|9/|9/", 114),
-                                           ("X|X|X|X|X|X|X|X|X|X|XX", 300),
-                                           ("12|45|5/|8-|9/|X|X|X|X|X", 148),
-                                           ("--|--", 0),])
+@pytest.mark.parametrize(
+    "score, result",
+    [
+        ("11|11", 4),
+        ("9/|9/|9/|9/|9/|9/|9/", 114),
+        ("X|X|X|X|X|X|X|X|X|X|XX", 300),
+        ("12|45|5/|8-|9/|X|X|X|X|X", 148),
+        ("--|--", 0),
+    ],
+)
 def test_calculate_result(score, result):
     actual = calculate_result(score)
     assert actual == result
-
